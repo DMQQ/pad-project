@@ -19,24 +19,15 @@ export class AuthMiddleware implements NestMiddleware {
         email: string;
       }>(token);
 
-      console.log(result);
-
       req.userId = result?.accountId;
-
       next();
     } catch (error) {
-      // res.clearCookie('authentication');
-
-      console.log({ token });
-
       console.log(error);
 
-      next();
-
-      // res.status(401).send({
-      //   error: 'Invalid cookie signature, sign again',
-      //   statusCode: 401,
-      // });
+      res.status(401).send({
+        error: 'Invalid cookie signature, sign again',
+        statusCode: 401,
+      });
     }
   }
 }

@@ -36,8 +36,6 @@ export class TodosController {
   async findTodos(@User() userId: string) {
     const todos = await this.todosService.findByUserId(userId);
 
-    console.log(typeof userId, userId);
-
     return todos;
   }
 

@@ -11,7 +11,7 @@ import { TodosModule } from './todos/todos.module';
         type: 'mysql',
         host: 'localhost',
         username: 'root',
-        password: '',
+        password: 'damianek45',
         database: 'todos',
         entities: ['dist/**/*.entity{.ts,.js}'],
         synchronize: true,
