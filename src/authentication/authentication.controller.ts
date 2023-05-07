@@ -1,9 +1,7 @@
 import {
   Controller,
   Post,
-  Query,
   Body,
-  Headers,
   Res,
   BadRequestException,
 } from '@nestjs/common';
@@ -36,16 +34,10 @@ export class AuthenticationController {
       email: created.email,
     });
 
-    response.cookie('authentication', token, {
-      secure: false,
-      httpOnly: true,
-      expires: new Date(Date.now() + 1000 * 60 * 60 * 60),
-      path: '/',
-    });
-
     response.status(200).send({
       authenticated: true,
       email: created.email,
+      token: token,
     });
   }
 
@@ -68,16 +60,10 @@ export class AuthenticationController {
       email: account.email,
     });
 
-    response.cookie('authentication', jwt, {
-      secure: false,
-      httpOnly: true,
-      expires: new Date(Date.now() + 1000 * 60 * 60 * 60),
-      path: '/',
-    });
-
     response.status(200).send({
       authenticated: true,
       email: account.email,
+      token: jwt,
     });
   }
 }

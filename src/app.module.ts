@@ -1,6 +1,8 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthenticationModule } from './authentication/authentication.module';
+import { AuthMiddleware } from './middlewares/auth.middleware';
+import { TodosModule } from './todos/todos.module';
 
 @Module({
   imports: [
@@ -9,7 +11,7 @@ import { AuthenticationModule } from './authentication/authentication.module';
         type: 'mysql',
         host: 'localhost',
         username: 'root',
-        password: 'damianek45',
+        password: '',
         database: 'todos',
         entities: ['dist/**/*.entity{.ts,.js}'],
         synchronize: true,
@@ -17,6 +19,12 @@ import { AuthenticationModule } from './authentication/authentication.module';
     }),
 
     AuthenticationModule,
+
+    TodosModule,
   ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(AuthMiddleware).forRoutes('/todos');
+  }
+}
